@@ -7,8 +7,8 @@ import java.util.*;
 public class Gammago {
 
     public static void main(String args[]){
-        Board b = new Board(3);
-        AI ai = new AI(b);
+        Board b = new Board(5);
+        AI ai = new AI(5);
         Scanner scan = new Scanner(System.in);
 
         String position = " ";
@@ -19,18 +19,18 @@ public class Gammago {
 
         while(true)
         {
-            if (b.checkTurn == false)
+            if (!b.checkTurn)
             {
-                // Player
-                System.out.print("input your position (ex: A3): ");
-                position = scan.nextLine();
-                checkOverlap = b.inputStoneOnBoard(position);
+                ai.selectProperState(3, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int[] aiPos = ai.selectNextMove();
+                checkOverlap = b.inputStoneOnBoard(aiPos);
+
                 if (!checkOverlap) continue;
                 b.printBoard();
 
-                if (b.isWin(position) == -3)
+                if (b.isWin(aiPos[0], aiPos[1]) == 5)
                 {
-                    System.out.println("Player wins.");
+                    System.out.println("AI wins");
                     break;
                 }
                 else if (b.isDraw())
@@ -41,16 +41,16 @@ public class Gammago {
             }
             else
             {
-                ai.selectProperState(3, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                int[] aiPos = ai.selectNextMove();
-                checkOverlap = b.inputStoneOnBoard(aiPos);
-
+                // Player
+                System.out.print("input your position (ex: A3): ");
+                position = scan.nextLine();
+                checkOverlap = b.inputStoneOnBoard(position);
                 if (!checkOverlap) continue;
                 b.printBoard();
 
-                if (b.isWin(aiPos[0], aiPos[1]) == 3)
+                if (b.isWin(position) == -5)
                 {
-                    System.out.println("AI wins");
+                    System.out.println("Player wins.");
                     break;
                 }
                 else if (b.isDraw())
@@ -73,11 +73,11 @@ class Board {
     private final boolean CONTINUE  = false;
     private final boolean DRAW      = true;
 
-    private final int PLAYER_WIN    = -3;
-    private final int AI_WIN        = 3;
+    private final int PLAYER_WIN    = -5;
+    private final int AI_WIN        = 5;
 
-    public int boardSize;
-    public int[][] board;
+    public static int boardSize;
+    public static int[][] board;
     public boolean checkTurn; // false : black, true : white
 
     //    constructor
@@ -156,8 +156,6 @@ class Board {
         int pos_row = a[0];
         int pos_col = a[1];
 
-//        int x_Intpos = Character.getNumericValue(pos.charAt(0)) - 10; // A = 10
-//        int y_Intpos = Character.getNumericValue(pos.charAt(1)) - 1; // array start 0
         int checkCurrentTurn = checkWhosTurn();
 
         if ( checkCurrentTurn == WHITE_PLAYER && board[pos_row][pos_col] == 0)
@@ -179,17 +177,18 @@ class Board {
 
     public int checkWhosTurn ()
     {
-        //player's turn
+        //ai's turn
         if (!checkTurn)
         {
             checkTurn = true;
-            return WHITE_PLAYER;
+            return BLACK_COMPUTER;
+
         }
-        //AI's turn
+        //player's turn
         else
         {
             checkTurn = false;
-            return BLACK_COMPUTER;
+            return WHITE_PLAYER;
         }
     }
 
@@ -198,6 +197,7 @@ class Board {
         int[] currentPos = positionParse(pos);
         int currentRow = currentPos[0];
         int currentCol = currentPos[1];
+
         int sum_checkRow  = 0;
         int sum_checkCol  = 0;
         int sum_checkLDiag = 0;
@@ -214,7 +214,7 @@ class Board {
                 sum_checkLDiag += board[i][i];
             }
 //            right diagonal
-            if (currentCol + currentRow == 2)
+            if (currentCol + currentRow == 4)
             {
                 sum_checkRDiag += board[i][boardSize-i-1];
             }
@@ -246,7 +246,7 @@ class Board {
                 sum_checkLDiag += board[i][i];
             }
 //            right diagonal
-            if (col + row == 2)
+            if (col + row == 4)
             {
                 sum_checkRDiag += board[i][boardSize-i-1];
             }
@@ -285,24 +285,16 @@ class Board {
     }
 }
 
-class AI
+class AI extends Board
 {
-    int[][] board;
-    int boardSize;
-    int checkTurn;
-//    int checkWin;
-
     int row;
     int col;
 
-    ArrayList<int[]> nextMovePostion = new ArrayList<int[]>();
-
-    public AI (Board b)
-    {
-        this.board      = b.board;
-        this.boardSize  = b.boardSize;
-        this.checkTurn = b.checkWhosTurn();
+    public AI (int boardSize) {
+        super(boardSize);
     }
+
+    ArrayList<int[]> nextMovePostion = new ArrayList<int[]>();
 
     int calculateBoardWeight ()
     {
@@ -310,26 +302,26 @@ class AI
         final int BLACK = 1;
         int sum_boardWeight = 0;
 /*
-[][0] is number of white stone, [][1] is number of blackstone
-[0,1,2] is low, [3,4,5] is col, [6,7] is diagnol
+    [][0] is number of white stone, [][1] is number of blackstone
+    [0,1,2] is low, [3,4,5] is col, [6,7] is diagnol
 */
 
         int[][] checker =   new int[(boardSize*2)+2][2];
 
-        for ( int i = 0 ;  i < boardSize ; i++ )
+        for ( int i = 0 ; i < boardSize ; i++ )
         {
-            for (int j = 0; j < boardSize; j++)
+            for ( int j = 0 ; j < boardSize ; j++ )
             {
                 if      (board[i][j] == -1) checker[i][WHITE]++;
                 else if (board[i][j] == 1)  checker[i][BLACK]++;
 
-                if      (board[j][i] == -1) checker[i+3][WHITE]++;
-                else if (board[j][i] == 1)  checker[i+3][BLACK]++;
+                if      (board[j][i] == -1) checker[i+5][WHITE]++;
+                else if (board[j][i] == 1)  checker[i+5][BLACK]++;
             }
 //            right diagnol
             if      (board[i][i] == -1)     checker[boardSize*2][WHITE]++;
             else if (board[i][i] == 1)      checker[boardSize*2][BLACK]++;
-//            left dignool
+//            left diagnol
             if (board[i][boardSize - 1 - i] == -1)      checker[boardSize*2+1][WHITE]++;
             else if (board[i][boardSize - 1 - i] == 1) checker[boardSize*2+1][BLACK]++;
         }
@@ -350,10 +342,15 @@ class AI
     {
         int convertValue;
 
-        if      ( white == 3 )                  convertValue = -100;
+        if      ( white == 5 )                  convertValue = -10000;
+        else if ( white == 4 && black == 0 )    convertValue = -1000;
+        else if ( white == 3 && black == 0 )    convertValue = -100;
         else if ( white == 2 && black == 0 )    convertValue = -10;
         else if ( white == 1 && black == 0 )    convertValue = -1;
-        else if ( black == 3 )                  convertValue = 100;
+
+        else if ( black == 5 )                  convertValue = 10000;
+        else if ( black == 4 && white == 0 )    convertValue = 1000;
+        else if ( black == 3 && white == 0 )    convertValue = 100;
         else if ( black == 2 && white == 0 )    convertValue = 10;
         else if ( black == 1 && white == 0 )    convertValue = 1;
         else convertValue = 0;
@@ -384,17 +381,17 @@ class AI
             if ( checkTurn == 1 )
             {
                 board[properPos[0]][properPos[1]] = 1;
-//                System.out.println("depth : " + depth);
-//                printBoard();
+                System.out.println("depth : " + depth);
+                printBoard();
 
                 score = selectProperState(depth-1, -1, alpha, beta);
-//                System.out.println("alpha "+score+" " + currentAlpha + " " + alpha+"\t beta "+ beta);
+                System.out.println("alpha "+score+" " + currentAlpha + " " + alpha+"\t beta "+ beta);
 //                currentAlpha = Math.max(currentAlpha,score);
 //                currentAlpha = Math.max(currentAlpha,selectProperState(depth-1, -1, alpha, beta));
 //                System.out.println("alpha "+score+" " + currentAlpha + " " + alpha+"\t beta "+ beta);
 
                 alpha = Math.max(score,alpha);
-//                System.out.println("alpha "+score+" " + currentAlpha + " " + alpha+"\t beta "+ beta+"\n");
+                System.out.println("alpha "+score+" " + currentAlpha + " " + alpha+"\t beta "+ beta+"\n");
 
 
                 if ( depth == 3 )
@@ -404,8 +401,8 @@ class AI
                 }
                 if ( alpha >= beta )
                 {
-//                    System.out.println("alpa-cut\n");
-//                    printBoard();
+                    System.out.println("alpa-cut\n");
+                    printBoard();
                     board[properPos[0]][properPos[1]] = 0;
                     return alpha;
                 }
@@ -413,21 +410,21 @@ class AI
             else if ( checkTurn == -1 )
             {
                 board[properPos[0]][properPos[1]] = -1;
-//                System.out.println("depth : " + depth);
-//                printBoard();
+                System.out.println("depth : " + depth);
+                printBoard();
                 score = selectProperState(depth-1, 1,alpha,beta);
-//                System.out.println("beta "+score+" " + currentBeta + " " + beta+"\t alpha "+ alpha);
+                System.out.println("beta "+score+" " + currentBeta + " " + beta+"\t alpha "+ alpha);
 //                currentBeta = Math.min(currentBeta,selectProperState(depth-1, 1,alpha,beta));
 //                currentBeta = Math.min(currentBeta,score);
 //                System.out.println("beta "+score+" " + currentBeta + " " + beta+"\t alpha "+ alpha);
                 beta = Math.min(score,beta);
-//                System.out.println("beta "+score+" " + currentBeta + " " + beta+"\t alpha "+ alpha+"\n");
+                System.out.println("beta "+score+" " + currentBeta + " " + beta+"\t alpha "+ alpha+"\n");
 
 
                 if ( alpha >= beta )
                 {
-//                    System.out.println("beta-cut");
-//                    printBoard();
+                    System.out.println("beta-cut");
+                    printBoard();
                     board[properPos[0]][properPos[1]] = 0;
                     return beta;
                 }
@@ -440,6 +437,36 @@ class AI
         else return beta;
     }
 
+//    void printBoard()
+//    {
+//        for ( int i = 0 ; i < boardSize+2 ; i++ )
+//        {
+//            if ( i == 0 || i == boardSize+1 )
+//                System.out.print("\t");
+//
+//            else
+//                System.out.print((i)+"\t");
+//            for ( int j = 0 ; j < boardSize ; j++ )
+//            {
+//                if (i == 0 || i == boardSize+1)
+//                    System.out.format("%c",j+65);
+//                else if ( board[i-1][j] == 0 )
+//                    System.out.print('-');
+//                else if ( board[i-1][j] == -1 )
+//                    System.out.print('○');
+//                else if ( board[i-1][j] == 1 )
+//                    System.out.print('●');
+//            }
+//
+//            if( i == 0 || i == boardSize+1 )
+//                System.out.println();
+//            else
+//                System.out.println("\t  "+(i));
+//        }
+//        System.out.println();
+//    }
+
+
     int[] selectNextMove()
     {
         int[] tempArr = nextMovePostion.get(0);
@@ -451,9 +478,9 @@ class AI
 //        });
         for (int i = 0 ; i<nextMovePostion.size() ; i++ )
         {
-//            System.out.println(nextMovePostion.get(i)[0]+" "+
-//                    nextMovePostion.get(i)[1]+ " " +
-//                    nextMovePostion.get(i)[2]);
+            System.out.println(nextMovePostion.get(i)[0]+" "+
+                    nextMovePostion.get(i)[1]+ " " +
+                    nextMovePostion.get(i)[2]);
 
             if ( tempArr[2] < nextMovePostion.get(i)[2] )
             {
@@ -463,7 +490,6 @@ class AI
 
         return tempArr;
     }
-
 
     ArrayList<int[]> availalbePostion ()
     {
@@ -482,38 +508,10 @@ class AI
         return emptyPosition;
     }
 
-    void printBoard()
-    {
-        for ( int i = 0 ; i < boardSize+2 ; i++ )
-        {
-            if ( i == 0 || i == boardSize+1 )
-                System.out.print("\t");
-
-            else
-                System.out.print((i)+"\t");
-            for ( int j = 0 ; j < boardSize ; j++ )
-            {
-                if (i == 0 || i == boardSize+1)
-                    System.out.format("%c",j+65);
-                else if ( board[i-1][j] == 0 )
-                    System.out.print('-');
-                else if ( board[i-1][j] == -1 )
-                    System.out.print('○');
-                else if ( board[i-1][j] == 1 )
-                    System.out.print('●');
-            }
-
-            if( i == 0 || i == boardSize+1 )
-                System.out.println();
-            else
-                System.out.println("\t  "+(i));
-        }
-        System.out.println();
-    }
     public int checkWin() {
 
-        int[] sum_checkRow  = {0,0,0};
-        int[] sum_checkCol  = {0,0,0};
+        int[] sum_checkRow  = {0,0,0,0,0};
+        int[] sum_checkCol  = {0,0,0,0,0};
         int[] sum_checkDiag = {0,0};
 
 //        check winnig state. If sum_checker is -3, player wins, else sum_checker is 3, AI wins.
@@ -535,24 +533,24 @@ class AI
             }
         }
 
-        if ( sum_checkCol[0] == -3 ||
-                sum_checkCol[1] == -3 ||
-                sum_checkCol[2] == -3 ||
-                sum_checkRow[0] == -3 ||
-                sum_checkRow[1] == -3 ||
-                sum_checkRow[2] == -3 ||
-                sum_checkDiag[0] == -3 ||
-                sum_checkDiag[1] == -3 )
-            return -3;
-        else if ( sum_checkCol[0] == 3 ||
-                sum_checkCol[1] == 3 ||
-                sum_checkCol[2] == 3 ||
-                sum_checkRow[0] == 3 ||
-                sum_checkRow[1] == 3 ||
-                sum_checkRow[2] == 3 ||
-                sum_checkDiag[0] == 3 ||
-                sum_checkDiag[1] == 3 )
-            return 3;
+        if ( sum_checkCol[0] == -5 ||
+                sum_checkCol[1] == -5 ||
+                sum_checkCol[2] == -5 ||
+                sum_checkRow[0] == -5 ||
+                sum_checkRow[1] == -5 ||
+                sum_checkRow[2] == -5 ||
+                sum_checkDiag[0] == -5 ||
+                sum_checkDiag[1] == -5 )
+            return -5;
+        else if ( sum_checkCol[0] == 5 ||
+                sum_checkCol[1] == 5 ||
+                sum_checkCol[2] == 5 ||
+                sum_checkRow[0] == 5 ||
+                sum_checkRow[1] == 5 ||
+                sum_checkRow[2] == 5 ||
+                sum_checkDiag[0] == 5 ||
+                sum_checkDiag[1] == 5 )
+            return 5;
         else
             return 0; //continue
     }
