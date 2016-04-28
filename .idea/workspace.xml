@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2eea631-b550-41aa-9148-c6b162497866" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/AI_TermProject_GammaGo/AI.class" afterPath="$PROJECT_DIR$/out/production/AI_TermProject_GammaGo/AI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/AI_TermProject_GammaGo/Board.class" afterPath="$PROJECT_DIR$/out/production/AI_TermProject_GammaGo/Board.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Gammago.java" afterPath="$PROJECT_DIR$/src/Gammago.java" />
     </list>
     <ignored path="GammaGo.iws" />
@@ -30,10 +27,30 @@
       <file leaf-file-name="Gammago.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Gammago.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="377" column="60" selection-start-line="377" selection-start-column="60" selection-end-line="377" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#Board#0;class#Board#0" expanded="false" />
+                <element signature="method#initBoard#0;class#Board#0" expanded="false" />
+                <element signature="method#printBoard#0;class#Board#0" expanded="false" />
+                <element signature="method#checkWhosTurn#0;class#Board#0" expanded="false" />
+                <element signature="method#isWin#0;class#Board#0" expanded="false" />
+                <element signature="method#isDraw#0;class#Board#0" expanded="false" />
+                <element signature="method#positionParse#0;class#Board#0" expanded="false" />
+                <element signature="method#init_calculatedBoard#0;class#Board#0" expanded="false" />
+                <element signature="method#calculateBoardWeight#0;class#AI#0" expanded="false" />
+                <element signature="e#12519#12576#0" expanded="false" />
+                <element signature="e#12681#12791#0" expanded="false" />
+                <element signature="e#13412#13467#0" expanded="false" />
+                <element signature="e#13713#13770#0" expanded="false" />
+                <element signature="e#13873#13982#0" expanded="false" />
+                <element signature="e#14811#14834#0" expanded="false" />
+                <element signature="method#selectNextMove#0;class#AI#0" expanded="false" />
+                <element signature="e#15826#15895#0" expanded="false" />
+                <element signature="method#checkWin#0;class#AI#0" expanded="false" />
+                <element signature="e#17330#17357#0" expanded="false" />
+                <element signature="e#17450#17465#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -64,8 +81,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="146" />
+    <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="height" value="773" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -163,7 +182,6 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="FullScreen" value="true" />
   </component>
   <component name="RunManager" selected="Application.Gammago">
     <configuration default="false" name="Gammago" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -441,8 +459,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <frame x="146" y="23" width="1280" height="773" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -453,7 +471,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934928" sideWeight="0.503125" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934928" sideWeight="0.496875" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3914328" sideWeight="0.496875" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -464,7 +482,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3997344" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3988183" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -518,13 +536,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Gammago.java</url>
-          <line>267</line>
-          <properties />
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Gammago.java</url>
-          <line>240</line>
+          <line>170</line>
           <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
@@ -532,15 +544,28 @@
           <url>file://$PROJECT_DIR$/src/Gammago.java</url>
           <line>35</line>
           <properties />
-          <option name="timeStamp" value="25" />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Gammago.java</url>
+          <line>69</line>
+          <properties />
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="26" />
+      <option name="time" value="40" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="checkTrun" language="JAVA" custom="" />
         <watch expression="checkCurrentTurn" language="JAVA" custom="" />
+        <watch expression="b.board" language="JAVA" custom="" />
+        <watch expression="emptyPosition" language="JAVA" custom="" />
+        <watch expression="b.board[2][1]" language="JAVA" custom="" />
+        <watch expression="board[2][1]" language="JAVA" custom="" />
+        <watch expression="b.board[2][0]" language="JAVA" custom="" />
+        <watch expression="b.board[1][4]" language="JAVA" custom="" />
+        <watch expression="checkTurn" language="JAVA" custom="" />
       </configuration>
     </watches-manager>
   </component>
@@ -555,6 +580,26 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Board#0;class#Board#0" expanded="false" />
+            <element signature="method#initBoard#0;class#Board#0" expanded="false" />
+            <element signature="method#printBoard#0;class#Board#0" expanded="false" />
+            <element signature="method#checkWhosTurn#0;class#Board#0" expanded="false" />
+            <element signature="method#isWin#0;class#Board#0" expanded="false" />
+            <element signature="method#isDraw#0;class#Board#0" expanded="false" />
+            <element signature="method#positionParse#0;class#Board#0" expanded="false" />
+            <element signature="method#init_calculatedBoard#0;class#Board#0" expanded="false" />
+            <element signature="method#calculateBoardWeight#0;class#AI#0" expanded="false" />
+            <element signature="e#12519#12576#0" expanded="false" />
+            <element signature="e#12681#12791#0" expanded="false" />
+            <element signature="e#13412#13467#0" expanded="false" />
+            <element signature="e#13713#13770#0" expanded="false" />
+            <element signature="e#13873#13982#0" expanded="false" />
+            <element signature="e#14811#14834#0" expanded="false" />
+            <element signature="method#selectNextMove#0;class#AI#0" expanded="false" />
+            <element signature="e#15826#15895#0" expanded="false" />
+            <element signature="method#checkWin#0;class#AI#0" expanded="false" />
+            <element signature="e#17330#17357#0" expanded="false" />
+            <element signature="e#17450#17465#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -582,10 +627,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Gammago.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="180">
+          <caret line="377" column="60" selection-start-line="377" selection-start-column="60" selection-end-line="377" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Board#0;class#Board#0" expanded="false" />
+            <element signature="method#initBoard#0;class#Board#0" expanded="false" />
+            <element signature="method#printBoard#0;class#Board#0" expanded="false" />
+            <element signature="method#checkWhosTurn#0;class#Board#0" expanded="false" />
+            <element signature="method#isWin#0;class#Board#0" expanded="false" />
+            <element signature="method#isDraw#0;class#Board#0" expanded="false" />
+            <element signature="method#positionParse#0;class#Board#0" expanded="false" />
+            <element signature="method#init_calculatedBoard#0;class#Board#0" expanded="false" />
+            <element signature="method#calculateBoardWeight#0;class#AI#0" expanded="false" />
+            <element signature="e#12519#12576#0" expanded="false" />
+            <element signature="e#12681#12791#0" expanded="false" />
+            <element signature="e#13412#13467#0" expanded="false" />
+            <element signature="e#13713#13770#0" expanded="false" />
+            <element signature="e#13873#13982#0" expanded="false" />
+            <element signature="e#14811#14834#0" expanded="false" />
+            <element signature="method#selectNextMove#0;class#AI#0" expanded="false" />
+            <element signature="e#15826#15895#0" expanded="false" />
+            <element signature="method#checkWin#0;class#AI#0" expanded="false" />
+            <element signature="e#17330#17357#0" expanded="false" />
+            <element signature="e#17450#17465#0" expanded="false" />
           </folding>
         </state>
       </provider>

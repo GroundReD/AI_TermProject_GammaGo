@@ -28,69 +28,26 @@ public class Gammago {
                 ai.selectProperState(3, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 int[] aiPos = ai.selectNextMove();
                 checkOverlap = b.inputStoneOnBoard(aiPos);
+                if (!checkOverlap) continue;
 
-                boolean ck = b.isThreeThree_Value(aiPos[0],aiPos[1]);
-
-                if(ck){
+                int ck = b.isThreeThree_Value(aiPos[0], aiPos[1]);
+                if (ck == 1) {
                     b.checkWhosTurn();
-                    System.out.println("3-3 position, try again");
-                    b.board[trans_position[0]][trans_position[1]] = 2;
+                    b.board[aiPos[0]][aiPos[1]] = 2;
                     continue;
                 }
 
-                if (!checkOverlap) continue;
                 b.printBoard();
-
                 b.init_calculatedBoard();
 
-                if (b.isWin(aiPos[0], aiPos[1]) == b.AI_WIN)
-                {
+                if (b.isWin(aiPos[0], aiPos[1]) == b.AI_WIN) {
                     System.out.println("AI wins");
                     break;
-                }
-                else if (b.isDraw())
-                {
+                } else if (b.isDraw()) {
                     System.out.println("Game Draw");
                     break;
                 }
-
             }
-/*            {
-                // Player
-                System.out.print("input your position (ex: A3): ");
-                position = scan.nextLine();
-                Matcher match = match_input_value.matcher(position);
-                if(!match.matches())
-                {
-                    System.out.println("invalid format, try again");
-                    continue;
-                }
-                trans_position = b.positionParse(position);
-                checkOverlap = b.inputStoneOnBoard(trans_position);
-                if (!checkOverlap) continue;
-
-                boolean ck = b.isThreeThree_Value(trans_position[0],trans_position[1]);
-
-                if(ck){
-                    b.checkWhosTurn();
-                    System.out.println("3-3 position, try again");
-                    b.board[trans_position[0]][trans_position[1]] = 0;
-                    continue;
-                }
-
-                b.printBoard();
-
-                if (b.isWin(trans_position[0],trans_position[1]) == b.AI_WIN)
-                {
-                    System.out.println("Player wins.");
-                    break;
-                }
-                else if (b.isDraw())
-                {
-                    System.out.println("Game Draw");
-                    break;
-                }
-            }*/
             else
             {
                 // Player
@@ -106,9 +63,9 @@ public class Gammago {
                 checkOverlap = b.inputStoneOnBoard(trans_position);
                 if (!checkOverlap) continue;
 
-                boolean ck = b.isThreeThree_Value(trans_position[0],trans_position[1]);
+                int ck = b.isThreeThree_Value(trans_position[0],trans_position[1]);
 
-                if(ck){
+                if(ck == -1){
                     b.checkWhosTurn();
                     System.out.println("3-3 position, try again");
                     b.board[trans_position[0]][trans_position[1]] = 0;
@@ -193,33 +150,6 @@ class Board {
         }
         System.out.println();
     }
-   /* boolean inputStoneOnBoard(String pos)
-    {
-        int[] pos_stone = positionParse(pos);
-        int pos_row = pos_stone[0];
-        int pos_col = pos_stone[1];
-
-//        int x_Intpos = Character.getNumericValue(pos.charAt(0)) - 10; // A = 10
-//        int y_Intpos = Character.getNumericValue(pos.charAt(1)) - 1; // array start 0
-        int checkCurrentTurn = checkWhosTurn();
-
-        if ( checkCurrentTurn == WHITE_PLAYER && board[pos_row][pos_col] == 0)
-        {
-            board[pos_row][pos_col] = WHITE_PLAYER;
-            return true;
-        }
-        else if ( checkCurrentTurn == BLACK_COMPUTER && board[pos_row][pos_col] == 0)
-        {
-            board[pos_row][pos_col] = BLACK_COMPUTER;
-            return true;
-        }
-        else {
-            System.out.println("Stone is already in the place. Choose another place.");
-            checkWhosTurn();
-            return false;
-        }
-    }*/
-    //Overloading
     Boolean inputStoneOnBoard(int[] a)
     {
         int pos_row = a[0];
@@ -261,44 +191,6 @@ class Board {
         }
     }
 
-/*    public int isWin(String pos)
-    {
-        int[] currentPos = positionParse(pos);
-        int currentRow = currentPos[0];
-        int currentCol = currentPos[1];
-
-        int sum_checkRow  = 0;
-        int sum_checkCol  = 0;
-        int sum_checkLDiag = 0;
-        int sum_checkRDiag = 0;
-
-//        check winnig state. If sum_checker is -3, player wins, else sum_checker is 3, AI wins.
-        for (int i = 0; i < boardSize; i++)
-        {
-            sum_checkCol += board[i][currentCol];
-            sum_checkRow += board[currentRow][i];
-//            left diagonal
-            if ( currentCol == currentRow)
-            {
-                sum_checkLDiag += board[i][i];
-            }
-//            right diagonal
-            if (currentCol + currentRow == 4)
-            {
-                sum_checkRDiag += board[i][boardSize-i-1];
-            }
-            ;
-        }
-
-        if ( sum_checkCol == PLAYER_WIN || sum_checkLDiag == PLAYER_WIN || sum_checkRDiag == PLAYER_WIN || sum_checkRow == PLAYER_WIN )
-            return PLAYER_WIN;
-        else if ( sum_checkCol == AI_WIN || sum_checkLDiag == AI_WIN ||  sum_checkRDiag == AI_WIN || sum_checkRow == AI_WIN)
-            return AI_WIN;
-        else
-            return 0; //continue
-    }
-*/
-    // overloading isWin Method
     public int isWin(int row, int col) {
 
         int sum_checkRow  = 0;
@@ -357,7 +249,7 @@ class Board {
 
     }
 
-    public boolean isThreeThree_Value(int row, int col) {
+    public int isThreeThree_Value(int row, int col) {
 
         int sum_checkRow  = 0;
         int sum_checkCol  = 0;
@@ -366,21 +258,27 @@ class Board {
 
         for (int i = 0; i < boardSize; i++)
         {
-            if ( board[row][col] == BLACK_COMPUTER )
-            {
+            if ( board[row][i] == BLACK_COMPUTER)
                 sum_checkRow += board[row][i] * 100;
-                sum_checkCol += board[i][col] * 100;
-                sum_checkLDiag += board[i][i] * 100;
-                sum_checkRDiag += board[i][boardSize-i-1] * 100;
-            }
             else
-            {
-                sum_checkCol += board[i][col];
                 sum_checkRow += board[row][i];
-                sum_checkLDiag += board[i][i];
-                sum_checkRDiag += board[i][boardSize-i-1];
-            }
 
+
+            if ( board[i][col] == BLACK_COMPUTER)
+                sum_checkCol += board[i][col] * 100;
+            else
+                sum_checkCol += board[i][col] * 100;
+
+
+            if ( board[i][i] == BLACK_COMPUTER)
+                sum_checkLDiag += board[i][i] * 100;
+            else
+                sum_checkLDiag += board[i][i];
+
+            if ( board[i][boardSize-i-1] == BLACK_COMPUTER)
+                sum_checkRDiag += board[i][boardSize-i-1] * 100;
+            else
+                sum_checkRDiag += board[i][boardSize-i-1];
         }
 
         if ( (sum_checkCol == 300 && sum_checkRow == 300) ||
@@ -388,22 +286,21 @@ class Board {
                 (sum_checkCol == 300 && sum_checkRDiag == 300) ||
                 (sum_checkRow == 300 && sum_checkRDiag == 300) ||
                 (sum_checkRow == 300 && sum_checkLDiag == 300) ||
-                (sum_checkRDiag == 300 && sum_checkLDiag == 300) ) {
-            return true;
+                (sum_checkRDiag == 300 && sum_checkLDiag == 300) )
+            return 1;
+
+        else if ( (sum_checkCol == -3 && sum_checkRow == -3) ||
+                (sum_checkCol == -3 && sum_checkLDiag == -3) ||
+                (sum_checkCol == -3 && sum_checkRDiag == -3) ||
+                (sum_checkRow == -3 && sum_checkRDiag == -3) ||
+                (sum_checkRow == -3 && sum_checkLDiag == -3) ||
+                (sum_checkRDiag == -3 && sum_checkLDiag == -3)) {
+            return -1;
         }
         else
-            return false; //continue
+            return 0;
 
     }
-    /*
-    boolean isThreeThree(String str) {
-        int[] a = positionParse(str);
-        inputStoneOnBoard(a);
-        boolean res = isThreeThree_Value(a[0], a[1]);
-
-        return res;
-    }
-    */
 
     void init_calculatedBoard ()
     {
@@ -419,8 +316,6 @@ class Board {
 }
 
 class AI extends Board {
-    int row;
-    int col;
 
     public AI(int boardSize) {
         super(boardSize);
@@ -476,11 +371,11 @@ class AI extends Board {
         else if (white == 2 && black == 0) convertValue = -10;
         else if (white == 1 && black == 0) convertValue = -1;
 
-        else if (black == 5) convertValue = 10000;
-        else if (black == 4 && white == 0) convertValue = 1000;
-        else if (black == 3 && white == 0) convertValue = 100;
-        else if (black == 2 && white == 0) convertValue = 10;
-        else if (black == 1 && white == 0) convertValue = 1;
+        else if (black == 5) convertValue = 100000;
+        else if (black == 4 && white == 0) convertValue = 10000;
+        else if (black == 3 && white == 0) convertValue = 1000;
+        else if (black == 2 && white == 0) convertValue = 100;
+        else if (black == 1 && white == 0) convertValue = 10;
         else convertValue = 0;
 
         return convertValue;
@@ -506,17 +401,17 @@ class AI extends Board {
             // AI turn
             if (checkTurn == 1) {
                 board[properPos[0]][properPos[1]] = 1;
-                System.out.println("depth : " + depth);
-                printBoard();
+//                System.out.println("depth : " + depth);
+//                printBoard();
 
                 score = selectProperState(depth - 1, -1, alpha, beta);
-                System.out.println("alpha " + score + " " + currentAlpha + " " + alpha + "\t beta " + beta);
+//                System.out.println("alpha " + score + " " + currentAlpha + " " + alpha + "\t beta " + beta);
 //                currentAlpha = Math.max(currentAlpha,score);
 //                currentAlpha = Math.max(currentAlpha,selectProperState(depth-1, -1, alpha, beta));
 //                System.out.println("alpha "+score+" " + currentAlpha + " " + alpha+"\t beta "+ beta);
 
                 alpha = Math.max(score, alpha);
-                System.out.println("alpha " + score + " " + currentAlpha + " " + alpha + "\t beta " + beta + "\n");
+//                System.out.println("alpha " + score + " " + currentAlpha + " " + alpha + "\t beta " + beta + "\n");
 
 
                 if (depth == 3) {
@@ -524,27 +419,27 @@ class AI extends Board {
                     nextMovePostion.add(properPos);
                 }
                 if (alpha >= beta) {
-                    System.out.println("alpa-cut\n");
-                    printBoard();
+//                    System.out.println("alpa-cut\n");
+//                    printBoard();
                     board[properPos[0]][properPos[1]] = 0;
                     return alpha;
                 }
             } else if (checkTurn == -1) {
                 board[properPos[0]][properPos[1]] = -1;
-                System.out.println("depth : " + depth);
-                printBoard();
+//                System.out.println("depth : " + depth);
+//                printBoard();
                 score = selectProperState(depth - 1, 1, alpha, beta);
-                System.out.println("beta " + score + " " + currentBeta + " " + beta + "\t alpha " + alpha);
+//                System.out.println("beta " + score + " " + currentBeta + " " + beta + "\t alpha " + alpha);
 //                currentBeta = Math.min(currentBeta,selectProperState(depth-1, 1,alpha,beta));
 //                currentBeta = Math.min(currentBeta,score);
 //                System.out.println("beta "+score+" " + currentBeta + " " + beta+"\t alpha "+ alpha);
                 beta = Math.min(score, beta);
-                System.out.println("beta " + score + " " + currentBeta + " " + beta + "\t alpha " + alpha + "\n");
+//                System.out.println("beta " + score + " " + currentBeta + " " + beta + "\t alpha " + alpha + "\n");
 
 
                 if (alpha >= beta) {
-                    System.out.println("beta-cut");
-                    printBoard();
+//                    System.out.println("beta-cut");
+//                    printBoard();
                     board[properPos[0]][properPos[1]] = 0;
                     return beta;
                 }
@@ -595,9 +490,9 @@ class AI extends Board {
 //            }
 //        });
         for (int i = 0; i < nextMovePostion.size(); i++) {
-            System.out.println(nextMovePostion.get(i)[0] + " " +
-                    nextMovePostion.get(i)[1] + " " +
-                    nextMovePostion.get(i)[2]);
+//            System.out.println(nextMovePostion.get(i)[0] + " " +
+//                    nextMovePostion.get(i)[1] + " " +
+//                    nextMovePostion.get(i)[2]);
 
             if (tempArr[2] < nextMovePostion.get(i)[2]) {
                 tempArr = nextMovePostion.get(i);
