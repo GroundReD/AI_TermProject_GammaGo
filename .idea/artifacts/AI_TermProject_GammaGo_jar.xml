@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AI_TermProject_GammaGo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AI_TermProject_GammaGo_jar</output-path>
+    <root id="archive" name="AI_TermProject_GammaGo.jar">
+      <element id="module-output" name="AI_TermProject_GammaGo" />
+    </root>
+  </artifact>
+</component>
